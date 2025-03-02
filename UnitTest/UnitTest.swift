@@ -6,29 +6,31 @@
 //
 
 import XCTest
+import MusicPlayer
 
 final class UnitTest: XCTestCase {
 
+    var viewModel: ViewModel?
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        viewModel = ViewModel()
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        viewModel = nil
     }
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    func testArtistUnknown() throws {
+        
+        viewModel?.fetchMusicData(artisName: "adsfjasdkfljalsdfkjl")
+        XCTAssertNotNil(viewModel?.getMusicList())
+        XCTAssertEqual(viewModel?.getMusicList().count, 0)
     }
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
+    func testPerformanceFetchData() throws {
+        // mengecek lama nya setiap fetching data: dari hasil test di simulator iPhone 15, waktu yang di butuhkan adalah 0.0028 detik
         measure {
-            // Put the code you want to measure the time of here.
+            viewModel?.fetchMusicData()
+            XCTAssertNotNil(viewModel?.getMusicList())
         }
     }
 
