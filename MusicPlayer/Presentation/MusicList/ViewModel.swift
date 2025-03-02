@@ -11,7 +11,7 @@ import Combine
 protocol ViewModelInput {
     func setupMusicObservable(onError: @escaping (String) -> Void, receiveValue: @escaping ([Music]) -> Void)
     func setupProgressObservable(onChange: @escaping (Double, Double) -> Void)
-    func fetchMusicData(artisName: String)
+    func fetchMusicData(artisName: String?)
     func setSelectedIndex(index: IndexPath?)
     func startPlaySong()
     func playOrPause()
@@ -28,7 +28,7 @@ protocol DefaultViewModel: ViewModelInput, ViewModelOutput {
     var cancellables: Set<AnyCancellable> { get }
 }
 
-class ViewModel: DefaultViewModel {
+public class ViewModel: DefaultViewModel {
     private var selectedIndex: IndexPath?
     private var audioManager = AudioManager.shared
     
@@ -56,7 +56,7 @@ class ViewModel: DefaultViewModel {
         }.store(in: &cancellables)
     }
     
-    func fetchMusicData(artisName: String) {
+    func fetchMusicData(artisName: String? = nil) {
         iTunesMusicUseCase.getMusicDataWithArtist(artistName: artisName)
     }
     

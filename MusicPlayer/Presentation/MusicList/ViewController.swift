@@ -121,6 +121,7 @@ class MusicListViewController: UIViewController {
         songList.register(MusicCell.self, forCellReuseIdentifier: MusicCell.identifier)
         songList.allowsMultipleSelection = false
         musicPanel.setDelegate(delegate: self)
+        (viewModel as? ViewModel)?.fetchMusicData()
     }
 }
 
