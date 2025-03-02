@@ -83,13 +83,5 @@ public class ViewModel: DefaultViewModel {
     func playOrPause() {
         audioManager.playPause()
     }
-    
-    func rewindSong() {
-        
-    }
-    
-    func nextSong() {
-        
-    }
 }
 
