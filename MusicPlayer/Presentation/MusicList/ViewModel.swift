@@ -15,8 +15,6 @@ protocol ViewModelInput {
     func setSelectedIndex(index: IndexPath?)
     func startPlaySong()
     func playOrPause()
-    func rewindSong()
-    func nextSong()
 }
 
 protocol ViewModelOutput{
