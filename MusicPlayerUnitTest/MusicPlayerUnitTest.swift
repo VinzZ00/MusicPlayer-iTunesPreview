@@ -27,7 +27,7 @@ final class UnitTest: XCTestCase {
     }
 
     func testPerformanceFetchData() throws {
-        // mengecek lama nya setiap fetching data: dari hasil test, AVG time di simulator
+        // mengecek lama nya setiap fetching data: dari hasil test di simulator iPhone 15, waktu yang di butuhkan adalah 0.0028 detik
         measure {
             viewModel?.fetchMusicData()
             XCTAssertNotNil(viewModel?.getMusicList())
