@@ -27,7 +27,7 @@ final class UnitTest: XCTestCase {
     }
 
     func testPerformanceFetchData() throws {
-        // mengecek lama nya setiap fetching data: dari hasil test, AVG
+        // mengecek lama nya setiap fetching data: dari hasil test, AVG time di simulator
         measure {
             viewModel?.fetchMusicData()
             XCTAssertNotNil(viewModel?.getMusicList())
