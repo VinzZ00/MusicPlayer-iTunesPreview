@@ -25,11 +25,21 @@ jobs:
       - name: Select Xcode Version
         run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
 
+      # resolve Dependency
       - name: Resolve SPM Dependency
         run: |
           xcodebuild -resolvePackageDependencies -project MusicPlayer.xcodeproj
 
+      # test Before Build
+      - name: Run Unit Tests
+        run: |
+          xcodebuild test \
+            -project MusicPlayer.xcodeproj \
+            -scheme MusicPlayer \
+            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            | xcbeautify
 
+      # Build .app for simulator
       - name: Build for iOS Simulator
         run: |
           xcodebuild clean build \
@@ -39,6 +49,7 @@ jobs:
             -derivedDataPath Build \
             | xcbeautify
 
+      # distribute .app as github artifact
       - name: Upload .app for Simulator
         uses: actions/upload-artifact@v4
         with:
