@@ -10,10 +10,10 @@ import Foundation
 class iTunesRepo {
     func fetchMusic(artistName: String? = nil, completion: @escaping (Result<[Music], Error>) -> Void) {
         var url: URL?
-        if artistName?.isEmpty == true {
-            url = URL(string: "https://itunes.apple.com/search?term=music&media=music&limit=50")
+        if let artistName = artistName {
+            url = URL(string: "https://itunes.apple.com/search?term=\(artistName)&media=music&limit=50")
         } else {
-            url = URL(string: "https://itunes.apple.com/search?term=\(artistName!)&media=music&limit=50")
+            url = URL(string: "https://itunes.apple.com/search?term=music&media=music&limit=50")
         }
         
         if let url {

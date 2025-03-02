@@ -14,7 +14,7 @@ protocol iTunesMusicUseCaseOutput {
 
 protocol iTunesMusicUseCaseInput {
     func getMusicData()
-    func getMusicDataWithArtist(artistName: String) 
+    func getMusicDataWithArtist(artistName: String?) 
 }
 
 protocol iTunesMusicUseCaseProtocol: iTunesMusicUseCaseInput, iTunesMusicUseCaseOutput {}
@@ -39,7 +39,7 @@ class iTunesMusicUseCaseImpl : iTunesMusicUseCaseProtocol {
         }
     }
     
-    func getMusicDataWithArtist(artistName: String) {
+    func getMusicDataWithArtist(artistName: String? = nil) {
         iTunesRepository.fetchMusic(artistName: artistName) { result in
             switch result {
             case .success(let music):

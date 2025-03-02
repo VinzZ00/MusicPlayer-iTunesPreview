@@ -11,12 +11,10 @@ import Combine
 protocol ViewModelInput {
     func setupMusicObservable(onError: @escaping (String) -> Void, receiveValue: @escaping ([Music]) -> Void)
     func setupProgressObservable(onChange: @escaping (Double, Double) -> Void)
-    func fetchMusicData(artisName: String)
+    func fetchMusicData(artisName: String?)
     func setSelectedIndex(index: IndexPath?)
     func startPlaySong()
     func playOrPause()
-    func rewindSong()
-    func nextSong()
 }
 
 protocol ViewModelOutput{
@@ -28,14 +26,14 @@ protocol DefaultViewModel: ViewModelInput, ViewModelOutput {
     var cancellables: Set<AnyCancellable> { get }
 }
 
-class ViewModel: DefaultViewModel {
+public class ViewModel: DefaultViewModel {
     private var selectedIndex: IndexPath?
     private var audioManager = AudioManager.shared
-    
     
     var cancellables: Set<AnyCancellable> = []
     var iTunesMusicUseCase: iTunesMusicUseCaseProtocol = iTunesMusicUseCaseImpl.shared
     
+    public init() {}
     
     func setupMusicObservable(onError: @escaping (String) -> Void, receiveValue: @escaping ([Music]) -> Void) {
         iTunesMusicUseCase.getMusicListObservable().sink { completion in
@@ -56,11 +54,11 @@ class ViewModel: DefaultViewModel {
         }.store(in: &cancellables)
     }
     
-    func fetchMusicData(artisName: String) {
+    public func fetchMusicData(artisName: String? = nil) {
         iTunesMusicUseCase.getMusicDataWithArtist(artistName: artisName)
     }
     
-    func getMusicList() -> [Music] {
+    public func getMusicList() -> [Music] {
         return iTunesMusicUseCase.getMusicListObservable().value
     }
     
@@ -82,14 +80,6 @@ class ViewModel: DefaultViewModel {
     
     func playOrPause() {
         audioManager.playPause()
-    }
-    
-    func rewindSong() {
-        
-    }
-    
-    func nextSong() {
-        
     }
 }
 
