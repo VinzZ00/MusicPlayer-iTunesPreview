@@ -1,0 +1,47 @@
+name: iOS CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: macos-14 # Mac Sonoma
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install xcbeautify
+        run: brew install xcbeautify
+    
+      - name: Check macOS & Xcode Versions
+        run: |
+          sw_vers
+          xcodebuild -version
+
+      - name: Select Xcode Version
+        run: sudo xcode-select -s /Applications/Xcode_15.4.app/Contents/Developer
+
+      - name: Resolve SPM Dependency
+        run: |
+          xcodebuild -resolvePackageDependencies -project MusicPlayer.xcodeproj
+
+
+      - name: Build for iOS Simulator
+        run: |
+          xcodebuild clean build \
+            -project MusicPlayer.xcodeproj \
+            -scheme MusicPlayer \
+            -destination 'platform=iOS Simulator,name=iPhone 15' \
+            -derivedDataPath Build \
+            | xcbeautify
+
+      - name: Upload .app for Simulator
+        uses: actions/upload-artifact@v4
+        with:
+          name: MyApp-Simulator
+          path: Build/Build/Products/Debug-iphonesimulator/*.app
+
