@@ -30,10 +30,10 @@ public class ViewModel: DefaultViewModel {
     private var selectedIndex: IndexPath?
     private var audioManager = AudioManager.shared
     
-    
     var cancellables: Set<AnyCancellable> = []
     var iTunesMusicUseCase: iTunesMusicUseCaseProtocol = iTunesMusicUseCaseImpl.shared
     
+    public init() {}
     
     func setupMusicObservable(onError: @escaping (String) -> Void, receiveValue: @escaping ([Music]) -> Void) {
         iTunesMusicUseCase.getMusicListObservable().sink { completion in
@@ -54,11 +54,11 @@ public class ViewModel: DefaultViewModel {
         }.store(in: &cancellables)
     }
     
-    func fetchMusicData(artisName: String? = nil) {
+    public func fetchMusicData(artisName: String? = nil) {
         iTunesMusicUseCase.getMusicDataWithArtist(artistName: artisName)
     }
     
-    func getMusicList() -> [Music] {
+    public func getMusicList() -> [Music] {
         return iTunesMusicUseCase.getMusicListObservable().value
     }
     

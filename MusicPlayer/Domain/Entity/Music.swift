@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Music {
+public struct Music {
     let previewUrl: String?
     let trackName: String?
     let artistName: String?
