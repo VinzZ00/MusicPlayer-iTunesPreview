@@ -36,15 +36,16 @@ public class ViewModel: DefaultViewModel {
     public init() {}
     
     func setupMusicObservable(onError: @escaping (String) -> Void, receiveValue: @escaping ([Music]) -> Void) {
-        iTunesMusicUseCase.getMusicListObservable().sink { completion in
-            switch completion{
-            case .finished:
-                break
+        iTunesMusicUseCase.getMusicListObservable()
+        .sink { result in
+            switch result {
+            case .success(let music):
+                receiveValue(music)
             case .failure(let err):
                 onError(err.localizedDescription)
+            case .none:
+                break
             }
-        } receiveValue: { music in
-            receiveValue(music)
         }.store(in: &cancellables)
     }
     
@@ -59,7 +60,15 @@ public class ViewModel: DefaultViewModel {
     }
     
     public func getMusicList() -> [Music] {
-        return iTunesMusicUseCase.getMusicListObservable().value
+        switch iTunesMusicUseCase.getMusicListObservable().value {
+        case .success(let music):
+            return music
+        case .failure(let err):
+            print("error in getting music list: \(err.localizedDescription)")
+            return []
+        case .none:
+            return []
+        }
     }
     
     func setSelectedIndex(index: IndexPath?) {
@@ -71,7 +80,7 @@ public class ViewModel: DefaultViewModel {
     }
     
     deinit {
-        cancellables.forEach{ $0.cancel() } // Cancel all the subscriptions
+        cancellables.forEach{ $0.cancel() }
     }
     
     func startPlaySong() {

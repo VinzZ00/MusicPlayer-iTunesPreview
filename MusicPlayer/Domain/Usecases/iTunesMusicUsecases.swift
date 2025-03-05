@@ -9,12 +9,12 @@ import Foundation
 import Combine
 
 protocol iTunesMusicUseCaseOutput {
-    func getMusicListObservable() -> CurrentValueSubject<[Music], Error>
+    func getMusicListObservable() -> CurrentValueSubject<Result<[Music], Error>?, Never>
 }
 
 protocol iTunesMusicUseCaseInput {
     func getMusicData()
-    func getMusicDataWithArtist(artistName: String?) 
+    func getMusicDataWithArtist(artistName: String?)
 }
 
 protocol iTunesMusicUseCaseProtocol: iTunesMusicUseCaseInput, iTunesMusicUseCaseOutput {}
@@ -25,16 +25,16 @@ class iTunesMusicUseCaseImpl : iTunesMusicUseCaseProtocol {
     
     public static let shared = iTunesMusicUseCaseImpl()
     
-    private let musicListObservable = CurrentValueSubject<[Music], Error>([])
+    private var musicListObservable: CurrentValueSubject<Result<[Music], Error>?, Never> = CurrentValueSubject<Result<[Music], Error>?, Never>(nil)
     private let iTunesRepository: iTunesRepo = iTunesRepo()
     
     func getMusicData() {
         iTunesRepository.fetchMusic { result in
             switch result {
             case .success(let music):
-                self.musicListObservable.send(music)
+                self.musicListObservable.send(.success(music))
             case .failure(let err):
-                self.musicListObservable.send(completion: .failure(err))
+                self.musicListObservable.send(.failure(err))
             }
         }
     }
@@ -43,14 +43,14 @@ class iTunesMusicUseCaseImpl : iTunesMusicUseCaseProtocol {
         iTunesRepository.fetchMusic(artistName: artistName) { result in
             switch result {
             case .success(let music):
-                self.musicListObservable.send(music)
+                self.musicListObservable.send(.success(music))
             case .failure(let err):
-                self.musicListObservable.send(completion: .failure(err))
+                self.musicListObservable.send(.failure(err))
             }
         }
     }
     
-    func getMusicListObservable() -> CurrentValueSubject<[Music], any Error> {
+    func getMusicListObservable() -> CurrentValueSubject<Result<[Music], Error>?, Never> {
         return musicListObservable
     }
 }
