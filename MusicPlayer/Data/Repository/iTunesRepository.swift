@@ -30,7 +30,7 @@ class iTunesRepo {
                 }
             }
         } else {
-            return completion(.failure(NSError.invalidUrl))
+            completion(.failure(NSError.invalidUrl))
         }
     }
 }

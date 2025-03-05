@@ -17,6 +17,7 @@ class MusicListViewController: UIViewController {
     let musicPanel: MusicPanelView = MusicPanelView()
     
     let body: UIStackView = UIStackView()
+    let loadingView = LoadingViewHelper()
     
     static func createModule() -> UIViewController {
         return MusicListViewController(viewModel: ViewModel())
@@ -74,11 +75,16 @@ class MusicListViewController: UIViewController {
     
     private func setupObservable() {
         viewModel.setupMusicObservable { [weak self] locErr in
-            self?.showSnackbar(message: locErr)
+            DispatchQueue.main.async { [weak self] in
+                self?.loadingView.hide()
+                self?.showSnackbar(message: locErr)
+            }
         } receiveValue: { [weak self] _ in
             DispatchQueue.main.async {
-                self?.viewModel.setSelectedIndex(index: nil)
-                self?.songList.reloadData()
+                guard let self else { return }
+                self.loadingView.hide()
+                self.viewModel.setSelectedIndex(index: nil)
+                self.songList.reloadData()   
             }
         }
         
@@ -129,6 +135,7 @@ class MusicListViewController: UIViewController {
 extension MusicListViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        loadingView.show(in: self.view)
         viewModel.fetchMusicData(artisName: textField.text ?? "")
         return true
     }

@@ -32,6 +32,8 @@
 		ACB147532D738466009008DD /* AudioManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB147522D738466009008DD /* AudioManager.swift */; };
 		ACB147552D738851009008DD /* MusicPanelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB147542D738851009008DD /* MusicPanelView.swift */; };
 		ACB147572D738F9D009008DD /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACB147562D738F9D009008DD /* CustomTextField.swift */; };
+		ACF8FB192D78C5CF001D92C5 /* UIApplication+TopVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8FB182D78C5CF001D92C5 /* UIApplication+TopVC.swift */; };
+		ACF8FB1B2D78C8EF001D92C5 /* LoadingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ACF8FB1A2D78C8EF001D92C5 /* LoadingManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +74,8 @@
 		ACB147522D738466009008DD /* AudioManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioManager.swift; sourceTree = "<group>"; };
 		ACB147542D738851009008DD /* MusicPanelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPanelView.swift; sourceTree = "<group>"; };
 		ACB147562D738F9D009008DD /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
+		ACF8FB182D78C5CF001D92C5 /* UIApplication+TopVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIApplication+TopVC.swift"; sourceTree = "<group>"; };
+		ACF8FB1A2D78C8EF001D92C5 /* LoadingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,6 +185,7 @@
 				ACB1472D2D722AFF009008DD /* NSConstraint+DSL.swift */,
 				ACB147342D723015009008DD /* UIColor+HexCodeConvenienceInit.swift */,
 				AC7A8EB42D73B6D30004EA95 /* UIStackView+DSL.swift */,
+				ACF8FB182D78C5CF001D92C5 /* UIApplication+TopVC.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -249,6 +254,7 @@
 		ACB147482D723DA5009008DD /* Helper */ = {
 			isa = PBXGroup;
 			children = (
+				ACF8FB1A2D78C8EF001D92C5 /* LoadingManager.swift */,
 				ACB147492D723DAD009008DD /* SnackBarHelper.swift */,
 			);
 			path = Helper;
@@ -381,6 +387,7 @@
 				ACB1472B2D71F645009008DD /* UIView+DSL.swift in Sources */,
 				ACB147532D738466009008DD /* AudioManager.swift in Sources */,
 				ACB146F72D71F1A1009008DD /* MusicCell.swift in Sources */,
+				ACF8FB192D78C5CF001D92C5 /* UIApplication+TopVC.swift in Sources */,
 				ACB147572D738F9D009008DD /* CustomTextField.swift in Sources */,
 				ACB1474A2D723DAD009008DD /* SnackBarHelper.swift in Sources */,
 				ACB1473A2D723535009008DD /* MusicDTO.swift in Sources */,
@@ -394,6 +401,7 @@
 				ACB146E32D71F03C009008DD /* SceneDelegate.swift in Sources */,
 				AC7A8EB32D73ABA20004EA95 /* KeyConstant.swift in Sources */,
 				ACB1474C2D723EAF009008DD /* ErrorConstant.swift in Sources */,
+				ACF8FB1B2D78C8EF001D92C5 /* LoadingManager.swift in Sources */,
 				ACB147302D722D38009008DD /* ViewModel.swift in Sources */,
 				ACB147332D722FD6009008DD /* ColorConstant.swift in Sources */,
 				ACB147402D7239C4009008DD /* Music.swift in Sources */,

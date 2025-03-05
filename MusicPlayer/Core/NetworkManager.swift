@@ -22,6 +22,7 @@ class NetworkManager {
             guard let data = data else { return }
             
             do {
+                print("String json :\(String(data: data, encoding: .utf8) ?? "")")
                 let decodedData = try JSONDecoder().decode(T.self, from: data)
                 completion(.success(decodedData))
             } catch {

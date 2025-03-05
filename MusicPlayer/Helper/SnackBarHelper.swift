@@ -9,7 +9,7 @@ import UIKit
 
 class SnackbarView: UIView {
     private let messageLabel = UILabel()
-
+    private var isShowing: Bool = false
     init(message: String) {
         super.init(frame: .zero)
         setupView(message: message)
@@ -29,8 +29,9 @@ class SnackbarView: UIView {
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0
         
-        addSubview(messageLabel)
-        messageLabel.translatesAutoresizingMaskIntoConstraints = false
+        autoLayoutSubViews {
+            messageLabel
+        }
         
         NSLayoutConstraint.activate([
             messageLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
@@ -41,30 +42,35 @@ class SnackbarView: UIView {
     }
     
     func show(in view: UIView, duration: TimeInterval = 3.0) {
-        view.addSubview(self)
-        translatesAutoresizingMaskIntoConstraints = false
+        if !isShowing {
+            isShowing = true
+            view.autoLayoutSubViews {
+                self
+            }
 
-        NSLayoutConstraint.activate([
-            leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 80)
-        ])
-        
-        // Slide in animation
-        transform = CGAffineTransform(translationX: 0, y: 50)
-        alpha = 0
-        UIView.animate(withDuration: 0.3, animations: {
-            self.alpha = 1
-            self.transform = .identity
-        })
-        
-        // Auto-dismiss
-        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
-            self.dismiss()
+            NSLayoutConstraint.activate {
+                leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+                trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20)
+                bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -80)
+            }
+            
+            // Slide in animation
+            transform = CGAffineTransform(translationX: 0, y: 50)
+            alpha = 0
+            UIView.animate(withDuration: 0.3, animations: {
+                self.alpha = 1
+                self.transform = .identity
+            })
+            
+            // Auto-dismiss
+            DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+                self.dismiss()
+            }
         }
     }
 
     func dismiss() {
+        isShowing = false
         UIView.animate(withDuration: 0.3, animations: {
             self.alpha = 0
             self.transform = CGAffineTransform(translationX: 0, y: 50)
