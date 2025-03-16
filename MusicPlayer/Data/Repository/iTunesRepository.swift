@@ -10,7 +10,7 @@ import Foundation
 class iTunesRepo {
     func fetchMusic(artistName: String? = nil, completion: @escaping (Result<[Music], Error>) -> Void) {
         var url: URL?
-        if let artistName = artistName {
+        if let artistName = artistName?.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) {
             url = URL(string: "https://itunes.apple.com/search?term=\(artistName)&media=music&limit=50")
         } else {
             url = URL(string: "https://itunes.apple.com/search?term=music&media=music&limit=50")
